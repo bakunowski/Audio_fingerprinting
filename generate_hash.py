@@ -6,12 +6,16 @@ from scipy.ndimage.filters import maximum_filter
 from scipy.ndimage.morphology import (generate_binary_structure,
                                       binary_erosion, iterate_structure)
 
-# get spectrogram
+
 def calculate_spectrogram(audio_file):
+    '''
+    Calculates a spectrogram (2D numpy array) of a given audio file
+    '''
     samples, sr = librosa.load(audio_file, sr=22050)
     D = librosa.amplitude_to_db(np.abs(librosa.stft(samples)), ref=np.max)
 
     return D
+
 
 # find peaks in spectrogram
 # https://stackoverflow.com/questions/3684484/peak-detection-in-a-2d-array
@@ -34,8 +38,8 @@ def detect_peaks(arr2D, amp_min=-20, plot=False):
     local_max = maximum_filter(arr2D, footprint=neighborhood) == arr2D
     background = (arr2D == 0)
     eroded_background = binary_erosion(background,
-                                        structure=neighborhood,
-                                        border_value=1)
+                                       structure=neighborhood,
+                                       border_value=1)
     # final mask
     detected_peaks = local_max ^ eroded_background
 
@@ -65,6 +69,7 @@ def detect_peaks(arr2D, amp_min=-20, plot=False):
 
     return list(zip(frequency_idx, time_idx))
 
+
 # create hash
 # this is not the anchor - target zone implementation
 # here we just use pairs of points to create hashes
@@ -91,6 +96,6 @@ def generate_hashes(peaks, fan_value=15):
                 if t_delta >= 0 and t_delta <= 200:
                     h = hashlib.sha1(
                         ("%s|%s|%s" % (str(freq1),
-                                        str(freq2),
-                                        str(t_delta))).encode('utf-8'))
+                                       str(freq2),
+                                       str(t_delta))).encode('utf-8'))
                     yield (h.hexdigest()[0:20], t_delta)

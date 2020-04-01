@@ -3,7 +3,7 @@ import os
 import generate_hash as g
 
 
-def fingerprintBuilder(database, fingerprints):
+def fingerprint_builder(database, fingerprints):
     i = 0
     for file in os.listdir(database):
         # calculate hashes for each file
@@ -24,4 +24,4 @@ def fingerprintBuilder(database, fingerprints):
         i += 1
 
 
-fingerprintBuilder('database_recordings', 'fingerprints')
+fingerprint_builder('database_recordings', 'fingerprints')
