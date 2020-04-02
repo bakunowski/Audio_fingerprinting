@@ -9,7 +9,7 @@ def fingerprint_builder(database, fingerprints):
         # calculate hashes for each file
         spec_array = g.calculate_spectrogram(os.path.join(database, file))
         stamps = g.detect_peaks(spec_array)
-        a = g.generate_hashes(stamps, fan_value=15)
+        a = g.generate_hashes_clean(stamps, file, fan_value=15)
 
         # write the peak values to a file, with identical name as the original
         with open(os.path.join(fingerprints, file), 'a+') as f:
@@ -24,4 +24,4 @@ def fingerprint_builder(database, fingerprints):
         i += 1
 
 
-fingerprint_builder('database_recordings', 'fingerprints_50')
+fingerprint_builder('database_recordings', 'fingerprints30')

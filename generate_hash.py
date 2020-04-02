@@ -12,14 +12,14 @@ def calculate_spectrogram(audio_file):
     Calculates a spectrogram (2D numpy array) of a given audio file
     '''
     samples, sr = librosa.load(audio_file, sr=22050)
-    D = librosa.amplitude_to_db(np.abs(librosa.stft(samples)), ref=np.max)
+    D = librosa.amplitude_to_db(np.abs(librosa.stft(samples, n_fft=4096)), ref=np.max)
 
     return D
 
 
 # find peaks in spectrogram
 # https://stackoverflow.com/questions/3684484/peak-detection-in-a-2d-array
-def detect_peaks(arr2D, amp_min=-50, plot=False):
+def detect_peaks(arr2D, amp_min=-30, plot=False):
     """
     Takes a spectrogram and detects the peaks using the local maximum filter
     Parameters:
