@@ -19,7 +19,7 @@ def calculate_spectrogram(audio_file):
 
 # find peaks in spectrogram
 # https://stackoverflow.com/questions/3684484/peak-detection-in-a-2d-array
-def detect_peaks(arr2D, amp_min=-20, plot=False):
+def detect_peaks(arr2D, amp_min=-50, plot=False):
     """
     Takes a spectrogram and detects the peaks using the local maximum filter
     Parameters:
@@ -98,4 +98,4 @@ def generate_hashes(peaks, fan_value=15):
                         ("%s|%s|%s" % (str(freq1),
                                        str(freq2),
                                        str(t_delta))).encode('utf-8'))
-                    yield (h.hexdigest()[0:20], t_delta)
+                    yield (h.hexdigest()[0:20], t1)
